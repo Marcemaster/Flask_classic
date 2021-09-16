@@ -1,6 +1,11 @@
 from balance import app
+from flask import render_template
+from balance.models import ListaMovimientos
 
 
-@app.route('/')
+@app.route ('/')
 def index():
-    return "flask funcionando"
+    lm = ListaMovimientos()
+    lm.leer()
+
+    return render_template("inicio.html", items=lm.movimientos)
