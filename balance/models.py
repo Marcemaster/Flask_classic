@@ -15,7 +15,7 @@ class ListaMovimientos():
         self.movimientos = []
 
     def leer(self):
-        fichero = open(FICHERO, "r")
+        fichero = open(FICHERO, "r", encoding="utf-8")
         dreader = csv.DictReader(fichero)
         for linea in dreader:
             self.movimientos.append(linea)
@@ -24,9 +24,17 @@ class ListaMovimientos():
     def escribir(self):
         if len(self.movimientos) == 0:
             return
-        fichero = open(FICHERO, "w")
+        fichero = open(FICHERO, "w", encoding="utf-8")
         nombres_campo = [self.movimientos[0].keys()]
         dreader = csv.DictWriter(fichero, fieldnames=nombres_campo)
         for movimiento in self.movimientos:
             dreader.writerow(movimiento)
         fichero.close()
+
+    def añadir(self, valor):
+        movimiento = {}
+        movimiento['fecha'] = valor['fecha']
+        movimiento['concepto'] = valor['concepto']
+        movimiento['ingreso_gasto'] = valor['ingreso_gasto']
+        movimiento['cantidad'] = valor['cantidad']
+        self.movimientos.append(movimiento)
