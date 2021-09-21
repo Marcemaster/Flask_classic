@@ -1,14 +1,42 @@
 import csv
+from datetime import date, datetime
 from . import FICHERO
 
-# La clase movimiento no la usamos todavía
+
 
 class Movimiento():
-    def __init__(self, fecha, concepto, es_ingreso, cantidad):
-        self.fecha = fecha
-        self.concepto = concepto
-        self.es_ingreso = es_ingreso
-        self.cantidad = cantidad
+    def __init__(self, diccionario):
+        try:
+            self.fecha = date.fromisoformat(diccionario['fecha'])
+
+            ahora = datetime.now()
+            if self.fecha.strftime("%Y%m%d")  > ahora.strftime("%Y%m%d"):
+                raise self.errores.append("La fecha no puede ser superior a la actual")
+
+        except ValueError:
+            raise self.errores.append("Formato de fecha incorrecto")
+
+
+        self.concepto = diccionario['concepto']
+        if self.concepto == "":
+            raise self.errores.append("Informe el concepto")
+
+        
+        try:
+            self.ingreso_gasto = diccionario['ingreso_gasto']
+        except KeyError:
+            raise self.errores.append("informe tipo de movimiento (Ingreso/Gasto)")
+        
+        try:
+            self.cantidad = diccionario['cantidad']
+            if self.cantidad <= 0:
+                raise self.errores.append("Cantidad debe ser positiva.")
+        except ValueError:
+            raise self.errores.append("Cantidad debe ser un número.")
+
+
+
+
 
 class ListaMovimientos():
     def __init__(self):
@@ -25,10 +53,11 @@ class ListaMovimientos():
         if len(self.movimientos) == 0:
             return
         fichero = open(FICHERO, "w", encoding="utf-8")
-        nombres_campo = [self.movimientos[0].keys()]
-        dreader = csv.DictWriter(fichero, fieldnames=nombres_campo)
+        nombres_campo = list(self.movimientos[0].keys())
+        dwriter = csv.DictWriter(fichero, fieldnames = nombres_campo)
+        dwriter.writeheader()
         for movimiento in self.movimientos:
-            dreader.writerow(movimiento)
+            dwriter.writerow(movimiento)
         fichero.close()
 
     def añadir(self, valor):

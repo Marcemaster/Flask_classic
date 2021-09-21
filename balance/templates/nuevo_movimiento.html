@@ -5,10 +5,14 @@
 {% block contenido_pagina %} 
 
             <h1>Nuevo movimiento</h1>
+            {% for error in errores %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
             <form action="/nuevo" method="post">
                 <div class="campo-formulario">
                     <label for="fecha" id="fecha">Fecha:</label>
-                    <input type="date">    
+                    <input type="date">
+                       
                 </div>
                 <div class="campo-formulario">
                     <label for="concepto">Concepto:</label>

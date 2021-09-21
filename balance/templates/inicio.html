@@ -13,9 +13,13 @@
         </tr>
             {% for item in items %}
         <tr>
-            <td>{{item.fecha}}</td>
-            <td>{{item.concepto}}</td>
-            <td>{% if item.ingreso_gasto == 'I' %} Ingreso {% else %} Gasto {% endif %}</td>
+            <td>{{ item.fecha }}</td>
+            <td>{{ item.concepto }}</td>
+            <td>{% if item.ingreso_gasto == 'I' %}
+                Ingreso
+                {% else %} 
+                Gasto 
+                {% endif %}</td>
             <td>{{item.cantidad}} €</td>
         </tr>
         {% endfor %}

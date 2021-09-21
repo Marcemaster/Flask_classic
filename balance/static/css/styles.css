@@ -56,3 +56,10 @@ footer *{
 .campo-formulario input:not([type="radio"]) {
     width: 100%;
 }
+
+.error {
+    background-color: #ffaaaa;
+    color: darkred;
+    font-size: 2rem;
+    font-weight: bold;
+}
